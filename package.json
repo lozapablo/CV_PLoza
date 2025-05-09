@@ -1,0 +1,23 @@
+{
+  "name": "cv_ploza",
+  "version": "1.0.0",
+  "description": "CV para reclutadores e interesados.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lozapablo/CV_PLoza.git"
+  },
+  "keywords": [
+    "CV",
+    "resumé"
+  ],
+  "author": "ploza",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lozapablo/CV_PLoza/issues"
+  },
+  "homepage": "https://github.com/lozapablo/CV_PLoza#readme"
+}
