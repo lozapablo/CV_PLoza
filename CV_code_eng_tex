@@ -1,0 +1,392 @@
+\documentclass[10pt, letterpaper]{article}
+
+% Packages:
+\usepackage[
+    ignoreheadfoot, % set margins without considering header and footer
+    top=2 cm, % seperation between body and page edge from the top
+    bottom=2 cm, % seperation between body and page edge from the bottom
+    left=2 cm, % seperation between body and page edge from the left
+    right=2 cm, % seperation between body and page edge from the right
+    footskip=1.0 cm, % seperation between body and footer
+    % showframe % for debugging 
+]{geometry} % for adjusting page geometry
+\usepackage{titlesec} % for customizing section titles
+\usepackage{tabularx} % for making tables with fixed width columns
+\usepackage{array} % tabularx requires this
+\usepackage[dvipsnames]{xcolor} % for coloring text
+\definecolor{primaryColor}{RGB}{0, 0, 0} % define primary color
+\usepackage{enumitem} % for customizing lists
+\usepackage{fontawesome5} % for using icons
+\usepackage{amsmath} % for math
+\usepackage[
+    pdftitle={PLoza CV},
+    pdfauthor={Pablo Loza},
+    pdfcreator={LaTeX with RenderCV},
+    colorlinks=true,
+    urlcolor=primaryColor
+]{hyperref} % for links, metadata and bookmarks
+\usepackage[pscoord]{eso-pic} % for floating text on the page
+\usepackage{calc} % for calculating lengths
+\usepackage{bookmark} % for bookmarks
+\usepackage{lastpage} % for getting the total number of pages
+\usepackage{changepage} % for one column entries (adjustwidth environment)
+\usepackage{paracol} % for two and three column entries
+\usepackage{ifthen} % for conditional statements
+\usepackage{needspace} % for avoiding page brake right after the section title
+\usepackage{iftex} % check if engine is pdflatex, xetex or luatex
+
+% Ensure that generate pdf is machine readable/ATS parsable:
+\ifPDFTeX
+    \input{glyphtounicode}
+    \pdfgentounicode=1
+    \usepackage[T1]{fontenc}
+    \usepackage[utf8]{inputenc}
+    \usepackage{lmodern}
+\fi
+
+\usepackage{charter}
+
+% Some settings:
+\raggedright
+\AtBeginEnvironment{adjustwidth}{\partopsep0pt} % remove space before adjustwidth environment
+\pagestyle{empty} % no header or footer
+\setcounter{secnumdepth}{0} % no section numbering
+\setlength{\parindent}{0pt} % no indentation
+\setlength{\topskip}{0pt} % no top skip
+\setlength{\columnsep}{0.15cm} % set column seperation
+\pagenumbering{gobble} % no page numbering
+
+\titleformat{\section}{\needspace{4\baselineskip}\bfseries\large}{}{0pt}{}[\vspace{1pt}\titlerule]
+
+\titlespacing{\section}{
+    % left space:
+    -1pt
+}{
+    % top space:
+    0.3 cm
+}{
+    % bottom space:
+    0.2 cm
+} % section title spacing
+
+\renewcommand\labelitemi{$\vcenter{\hbox{\small$\bullet$}}$} % custom bullet points
+\newenvironment{highlights}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=0 cm + 10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights
+
+
+\newenvironment{highlightsforbulletentries}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights for bullet entries
+
+\newenvironment{onecolentry}{
+    \begin{adjustwidth}{
+        0 cm + 0.00001 cm
+    }{
+        0 cm + 0.00001 cm
+    }
+}{
+    \end{adjustwidth}
+} % new environment for one column entries
+
+\newenvironment{twocolentry}[2][]{
+    \onecolentry
+    \def\secondColumn{#2}
+    \setcolumnwidth{\fill, 4.5 cm}
+    \begin{paracol}{2}
+}{
+    \switchcolumn \raggedleft \secondColumn
+    \end{paracol}
+    \endonecolentry
+} % new environment for two column entries
+
+\newenvironment{threecolentry}[3][]{
+    \onecolentry
+    \def\thirdColumn{#3}
+    \setcolumnwidth{, \fill, 4.5 cm}
+    \begin{paracol}{3}
+    {\raggedright #2} \switchcolumn
+}{
+    \switchcolumn \raggedleft \thirdColumn
+    \end{paracol}
+    \endonecolentry
+} % new environment for three column entries
+
+\newenvironment{header}{
+    \setlength{\topsep}{0pt}\par\kern\topsep\centering\linespread{1.5}
+}{
+    \par\kern\topsep
+} % new environment for the header
+
+\newcommand{\placelastupdatedtext}{% \placetextbox{<horizontal pos>}{<vertical pos>}{<stuff>}
+  \AddToShipoutPictureFG*{% Add <stuff> to current page foreground
+    \put(
+        \LenToUnit{\paperwidth-2 cm-0 cm+0.05cm},
+        \LenToUnit{\paperheight-1.0 cm}
+    ){\vtop{{\null}\makebox[0pt][c]{
+        \small\color{gray}\textit{Last updated in May 2025}\hspace{\widthof{Last updated in May 2025}}
+    }}}%
+  }%
+}%
+
+% save the original href command in a new command:
+\let\hrefWithoutArrow\href
+
+% new command for external links:
+
+
+\begin{document}
+    \newcommand{\AND}{\unskip
+        \cleaders\copy\ANDbox\hskip\wd\ANDbox
+        \ignorespaces
+    }
+    \newsavebox\ANDbox
+    \sbox\ANDbox{$|$}
+
+    \begin{header}
+        \fontsize{25 pt}{25 pt}\selectfont Pablo Loza
+
+        \vspace{5 pt}
+
+        \normalsize
+        \mbox{Av. Monckeberg \#35, Ñuñoa, Santiago}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{mailto:pablo.loza.v@gmail.com}{pablo.loza.v@gmail.com}}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{tel:056977992752}{+56-9-7799-2752}}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{https://www.linkedin.com/in/pablo-loza-940341100/}{linkedin.com/in/pablo-loza-940341100}}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{https://github.com/lozapablo}{github.com/lozapablo}}%
+    \end{header}
+
+    \vspace{5 pt - 0.3 cm}
+
+
+    \section{Sobre mi}
+
+
+
+        
+        \begin{onecolentry}
+            Ingeniero eléctrico de la Universidad de Chile con siete años de experiencia en las áreas de Telecomunicaciones y Construcción (Energías Renovables). Me he desempeñado como jefe de ingeniería y como especialista en redes TCP/IP e IPRAN 4G/5G, a cargo de personal técnico de campo y control documental. Logré estructurar y operar el área de ingeniería en una EPC de plantas FV, entregando más de 9 proyectos exitosos de 3-9MWp y reduciendo costos de diseño en un 30\%.
+        \end{onecolentry}
+
+        \vspace{0.2 cm}
+
+        \begin{onecolentry}
+            Ambas experiencias con ambientes profesionales en inglés, además de trabajar en diferentes países busco desafíos que permitan aplicar mi experiencia en Energías y Telecomunicaciones más mi adaptabilidad a nuevos entornos, contribuyendo al crecimiento de la organización.
+        \end{onecolentry}
+
+
+
+\section{Experiencia Profesional}
+
+
+
+        
+        \begin{twocolentry}{
+         2022 – Ahora
+        }
+            \textbf{Ingeniero en redes}, Claro, Chile - Operadora de Telecomunicaciones\end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Dirigí y revisé la calidad de un estudio técnico a nivel nacional de la red Claro Chile, liderando un equipo de 4 técnicos e ingenieros y asegurando una mejora del 50\% a un total de la aceptación de la documentación entregada.
+                \item Automaticé scripts para la implementación de routers Nokia, Huawei y ZTE para la IPRAN.
+                \item Diseñé e implementé enlaces para la red celular 4G/5G mediante Starlink, usando VPNs en firewalls Fortinet.
+                \item Especialista en redes para el traslado masivo de clientes corporativos en cierre de nodo neurálgico.
+                \item Capacité al equipo de ingenieros en tecnologías Fortinet para la operación de redes VXLAN/VPN.
+                \item Revisé la base de datos para el proyecto nacional para dar internet de alta velocidad a escuelas para VTR, además realicé el diseño de tecnologías de TX a implementar por escuela.
+                \item Tracé el diamgrama de red para migración la migración del NOC de Claro a un nuevo edificio, realizando también parte de la implementación.
+            \end{highlights}
+        \end{onecolentry}
+
+
+        \vspace{0.2 cm}
+
+        \begin{twocolentry}{
+         2020 – 2021
+        }
+            \textbf{Jefe de Ingeniería}, GEOM, Santiago, Chile - Constructora de ERNC\end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Creé y lideré el área de Ingeniería y Procura para el diseño y construcción de proyectos fotovoltaicos de autoconsumo y PMGD.
+                \item A cargo de la supervisión y guía de 5 técnicos especialistas para la revisión de presupuestos, diseño y construcción de más de 20MW confeccionando planos eléctricos, SCADA y civiles usando AutoCAD.
+                \item Desarollé soluciones técnicas únicas en la región como sistemas de comunicación inalámbrica para el control eléctrico Netbilling.
+                \item Estandaricé procesos y planos básicos para el diseño de proyectos Fotovoltaicos.
+                \item Revisé y di aporbación a soluciones entregadas por terceras empresas de distintos países para implementaciones FV.
+                \item Relacionamiento con clientes de distintas industrias para dar garantías técnicas y de seguridad en las instalaciones de energía a entregar.
+                \item Realicé estudios de nuevas tecnologías en ERNC para implementarlas en futuros proyectos tanto en almacenamiento de energía como en SCADA.
+
+            \end{highlights}
+        \end{onecolentry}
+
+\vspace{0.2 cm}
+
+        \begin{twocolentry}{
+         2018 – 2019
+        }
+            \textbf{Ingeniero de proyectos} Kubernet, Chile - Consultora de TICs\end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Parte del equipo de diseño e implementación para el Firewall CGNAT para toda la red 4G de Claro Chile. Coordinación constante con equipos vendors en USA y China.
+                \item Reconocimiento en terreno como ingeniero a cargo de la red IP troncal para Claro Chile, realizando la documentación técnica.
+                \item Técnico de campo y programador para la instalación de más de 20 sitios para la red IPRAN de Claro Chile, además del diseño e implementación de diversos cambios en la topología de la red.
+                \item Técnico especialista en firewalls Fortinet, en medianas y grandes empresas revisé equipos en funcionamiento, cree diseños para mejoras e implementé equipos nuevos en redes activas.
+            \end{highlights}
+        \end{onecolentry}
+
+    \section{Educación}
+
+
+
+        
+        \begin{twocolentry}{
+            2012 – 2018
+        }
+            \textbf{Universidad de Chile}, Ingeniería Civil Eléctrica\end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item GPA/Chile: 3.3/6.2 (\href{https://ucampus.uchile.cl/v/6096802252316}{Verificación})
+                \item \textbf{Cursos:} Tecnologías de la Información y Comunicaciones; Energía y Sistemas Eléctricos; Sistemas Digitales
+                \item \textbf{Asistente de Investigación:} Trabajé en estudios avanzados de IA aplicados a sistemas de automóviles y comunicaciones bajo la tutela de \href{https://www.cec.uchile.cl/~jinsongwu/}{PhD Jinsong Wu}.
+            \end{highlights}
+        \end{onecolentry}
+
+
+
+\section{Tecnologías}
+
+
+
+        
+        \begin{onecolentry}
+            \textbf{Lenguajes:} Intermedio - Python, Experimentado - MATLab, Familiarizado - Verilog, Familiarizado - C++.
+        \end{onecolentry}
+
+        \vspace{0.2 cm}
+
+        \begin{onecolentry}
+            \textbf{Tecnologías:} Network routing IP (Cisco, Nokia, ZTE, Huawei), SD-WAN, MSOffice, Firewall, PVcase, AutoCAD.
+        \end{onecolentry}
+
+        \vspace{0.2 cm}
+
+        \begin{onecolentry}
+            \textbf{Certificado:} Network Security Expert - Nivel IV
+        \end{onecolentry}
+
+
+
+
+
+    
+\section{Idiomas}
+
+
+
+        
+        \begin{onecolentry}
+            \textbf{Español:} Nativo.
+        \end{onecolentry}
+
+        \vspace{0.2 cm}
+
+        \begin{onecolentry}
+            \textbf{Inglés:} Profesional avanzado, programa W\&T con 6 meses trabajando en USA.
+        \end{onecolentry}
+
+        \vspace{0.2 cm}
+
+        \begin{onecolentry}
+            \textbf{Portugués:} Intermedio, seis meses viviendo en Brasil.
+        \end{onecolentry}
+
+        \vspace{0.2 cm}
+
+        \begin{onecolentry}
+            \textbf{Chino Mandarín:} Básico, 1er curso aprobado en el Instituto Confucio - PUC.
+        \end{onecolentry}
+
+    
+    \section{Referencias}
+
+
+
+        
+        \begin{onecolentry}
+            \textbf{Vicente Gumucio}
+
+        \vspace{0.10 cm}
+
+            \begin{highlights}
+                \item GEOM Renewable Energies / CTO
+                \item \hrefWithoutArrow{tel:056978066198}{+56-9-7806-6198} ; \hrefWithoutArrow{mailto:vgumucio@geom.cl}{vgumucio@geom.cl}
+            \end{highlights}
+        \end{onecolentry}
+
+
+
+        \begin{onecolentry}
+            \textbf{Domingo Becerra}
+
+        \vspace{0.10 cm}
+
+            \begin{highlights}
+                \item Kubernet CTO - Consultor Claro
+                \item \hrefWithoutArrow{tel:056954016134}{+56-9-5401-6134} ; \hrefWithoutArrow{mailto:domingo.becerra@kubernet.cl}{domingo.becerra@kubernet.cl}
+            \end{highlights}
+        \end{onecolentry}
+
+
+
+        \begin{onecolentry}
+            \textbf{PhD Jinsong Wu}
+
+            \begin{highlights}
+                \item Profesor asociado, Departamento de Ingeniería Eléctrica, Universidad de Chile.
+                \item \hrefWithoutArrow{tel:056229784761}{+56-2-2978-4761} ; \hrefWithoutArrow{jinsongwu@ing.uchile.cl}{jinsongwu@ing.uchile.cl}
+            \end{highlights}
+        \end{onecolentry}
+
+
+
+    
+    
+
+
+    
+
+\end{document}
